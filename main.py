@@ -11,9 +11,9 @@ class Task():
     def to_dict(self):
         return {
             "line": self.line,
-            "datetime": self.datetime.isoformat()  # Store datetime in ISO format
+            "datetime": self.datetime
         }
-    
+        
     @staticmethod
     def load_tasks(filename):
         if not os.path.exists(filename):
@@ -49,7 +49,8 @@ class MyCLI(cmd.Cmd):
         """Add a task."""
         if line:
             date_now = datetime.now()
-            task = Task(line, date_now)
+            date_str = date_now.strftime( '%H:%M' )
+            task = Task(line, date_str)
             self.tasks.append(task.to_dict())
             self.save_tasks()
             print(f"Added task: {line}")
